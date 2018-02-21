@@ -10,10 +10,14 @@
 
 #define SENSORPIN 4
 #define SENSORPIN2 3
+#define SENSORPIN3 5
+//#define SENSORPIN4 6
 
 // variables will change:
 int sensorState1 = 0, lastState1=0, count = 0;        // variable for reading the pushbutton status
 int sensorState2 = 0, lastState2=0; 
+int sensorState3 = 0, lastState3 = 0;
+//int sensorState4 = 0, lastState3 = 0;
 
 void setup() {
   // initialize the LED pin as an output:
@@ -21,6 +25,9 @@ void setup() {
   // initialize the sensor pin as an input:
   pinMode(SENSORPIN, INPUT);     
   digitalWrite(SENSORPIN, HIGH); // turn on the pullup
+  digitalWrite(SENSORPIN2, HIGH);
+  digitalWrite(SENSORPIN3, HIGH);
+  //digitalWrit(SENSORPIN4, HIGH);
  
   Serial.begin(9600);
 }
@@ -29,6 +36,8 @@ void loop(){
   // read the state of the pushbutton value:
   sensorState1 = digitalRead(SENSORPIN);
   sensorState2 = digitalRead(SENSORPIN2);
+  sensorState3 = digitalRead(SENSORPIN3);
+  //sensorState4 = digitalRead(SENSORPIN4);
 
   // check if the sensor beam is broken
   // if it is, the sensorState is LOW:
@@ -72,4 +81,42 @@ void loop(){
     delay(500);
   }
   lastState2 = sensorState2;
+
+  if (sensorState3 == LOW) {     
+    // turn LED on:
+    digitalWrite(LEDPIN, HIGH);  
+  } 
+  else {
+    // turn LED off:
+    digitalWrite(LEDPIN, LOW); 
+  }
+  
+  //if (sensorState && !lastState) {
+    //Serial.println("Unbroken");
+  //} 
+  if (!sensorState3 && lastState3) {
+    count++;
+    Serial.println(count);
+    delay(500);
+  }
+  lastState3 = sensorState3;
+
+  /*if (sensorState4 == LOW) {     
+    // turn LED on:
+    digitalWrite(LEDPIN, HIGH);  
+  } 
+  else {
+    // turn LED off:
+    digitalWrite(LEDPIN, LOW); 
+  }
+  
+  //if (sensorState && !lastState) {
+    //Serial.println("Unbroken");
+  //} 
+  if (!sensorState4 && lastState4) {
+    count++;
+    Serial.println(count);
+    delay(500);
+  }
+  lastState4 = sensorState4;*/
 }
